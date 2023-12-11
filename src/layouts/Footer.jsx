@@ -11,10 +11,15 @@ const FooterStyled = styled.footer`
   margin-top: auto;
   font-weight: 500;
 `
+
+const ParagraphStyled = styled.p`
+  font-size: 14px;
+`
+
 export default function Footer() {
     return (
         <FooterStyled>
-            footer
+            <ParagraphStyled> Brandon Paleczny - React- Assignment</ParagraphStyled>
         </FooterStyled>
     )
 }

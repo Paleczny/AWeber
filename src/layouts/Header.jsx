@@ -15,7 +15,7 @@ export default function Header(){
     return (
         <HeaderStyled>
             <AWeber/>
-            header
+            AWeber React Assignment
         </HeaderStyled>
     )
 }
