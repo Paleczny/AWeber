@@ -8,7 +8,6 @@ const FooterStyled = styled.footer`
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
-  margin-top: auto;
   font-weight: 500;
 `
 
