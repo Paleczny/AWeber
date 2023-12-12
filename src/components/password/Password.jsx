@@ -52,9 +52,11 @@ export default function Password() {
     const [passwordForm, setPasswordForm] = useState({
         password: '',
         confirmPassword: ''
-    })
+    });
 
-    const ruleDefinitions = {
+    const [passwordValidationErrors, setPasswordValidationErrors] = useState([]);
+
+    const passwordRequirements = {
         number: {
             valid: /\d/g,
             name: 'number'
@@ -67,36 +69,44 @@ export default function Password() {
             valid: /[a-z]/g,
             name: 'lowerCase'
         },
-    }
+        minLength: {
+            valid: /^.{6,}$/g,
+            name: 'minLength'
+        },
+        special: {
+            valid: /[!@#$%^&*()_/\-+={\[\]}|:;"'<,>.]/g,
+            name: 'special'
+        }
+    };
 
 
     function handleOnPasswordFormChange(event) {
-        const {name, value} = event.target
+        const {name, value} = event.target;
         setPasswordForm(passwordForm => {
             return {
                 ...passwordForm,
                 [name]: value
             }
-        })
+        });
     }
 
     function handleOnSubmit(event) {
-        event.preventDefault()
-        let validationErrors = []
+        event.preventDefault();
+        let validationErrors = [];
 
-        Object.keys(ruleDefinitions).map(ruleDefinition => {
-            !passwordForm.password.match(ruleDefinitions[ruleDefinition].valid)
-            && validationErrors.push(ruleDefinitions[ruleDefinition].name)
-        })
+        Object.keys(passwordRequirements).map(ruleDefinition => {
+            !passwordForm.password.match(passwordRequirements[ruleDefinition].valid)
+            && validationErrors.push(passwordRequirements[ruleDefinition].name)
+        });
 
-        console.log('validation errors: ', validationErrors)
+        setPasswordValidationErrors(validationErrors);
     }
 
     function isSubmitDisabled() {
-        const {password, confirmPassword} = passwordForm
-        const empty= !confirmPassword || !password
-        const equal = confirmPassword === password
-        return empty || !equal
+        const {password, confirmPassword} = passwordForm;
+        const empty = !confirmPassword || !password;
+        const equal = confirmPassword === password;
+        return empty || !equal;
     }
 
     return (
