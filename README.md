@@ -10,3 +10,12 @@ Password has at least 1 lowercase character
 Password has at least 1 number
 Password has at least 1 special character (!@#$%^&*()_-+={[}]|:;"'<,>.)
 Has a submit button that will trigger validation and present success or why the password entry failed
+
+
+
+To run application
+    npm install
+    npm run dev
+
+To run tests
+    npm run test
