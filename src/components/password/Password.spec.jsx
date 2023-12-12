@@ -3,8 +3,11 @@ import React from 'react';
 import Password from "./Password";
 
 describe('Password tests', () => {
-    it('should render the component', () => {
+    beforeEach(() => {
         render(<Password />);
+    });
+
+    it('submit button should be disabled', () => {
         expect(screen.getByTestId('button')).toBeDisabled();
     });
 

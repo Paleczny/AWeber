@@ -14,8 +14,8 @@ const PasswordSection = styled.section`
   border: 1px solid;
   border-radius: 10px;
   padding: 10px;
-  border-color: ${({noErrors}) => {
-    return noErrors ? 'green' : 'red';
+  border-color: ${({noerrors}) => {
+    return noerrors === 'true' ? 'green' : 'red';
   }};
 `
 
@@ -32,7 +32,7 @@ function PasswordRequirements({passwordRequirements}) {
     const noErrors = Object.keys(passwordRequirements).every(passwordRequirement => passwordRequirements[passwordRequirement].valid);
 
     return (
-        <PasswordSection noErrors={noErrors}>
+        <PasswordSection noerrors={noErrors ? 'true': 'false'}>
             <h4>Password Requirements</h4>
             <ul>
                 {validationListItems}

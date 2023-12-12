@@ -21,7 +21,7 @@ const FormStyled = styled.form`
 const LabelInputContainerStyled = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: ${({marginBottom}) => marginBottom}
+  margin-bottom: ${({marginbottom}) => marginbottom}
 `
 
 const SubmitButtonStyled = styled.button`
@@ -145,7 +145,7 @@ export default function Password() {
                                type='password'>
                         </input>
                     </LabelInputContainerStyled>
-                    <LabelInputContainerStyled marginBottom={passwordsAreEqual && '48px'}>
+                    <LabelInputContainerStyled marginbottom={passwordsAreEqual ? '48px' : '0px'}>
                         <label htmlFor='confirmPassword'>Confirm Password</label>
                         <input
                             id='confirmPassword'
