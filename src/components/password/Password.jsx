@@ -54,22 +54,49 @@ export default function Password() {
         confirmPassword: ''
     })
 
+    const ruleDefinitions = {
+        number: {
+            valid: /\d/g,
+            name: 'number'
+        },
+        upperCase: {
+            valid: /[A-Z]/g,
+            name: 'upperCase'
+        },
+        lowerCase: {
+            valid: /[a-z]/g,
+            name: 'lowerCase'
+        },
+    }
+
+
     function handleOnPasswordFormChange(event) {
-        event.preventDefault()
+        const {name, value} = event.target
         setPasswordForm(passwordForm => {
             return {
                 ...passwordForm,
-                [event.target.name]: event.target.value
+                [name]: value
             }
         })
     }
 
-    function handleOnSubmit() {
-        console.log('clicked');
+    function handleOnSubmit(event) {
+        event.preventDefault()
+        let validationErrors = []
+
+        Object.keys(ruleDefinitions).map(ruleDefinition => {
+            !passwordForm.password.match(ruleDefinitions[ruleDefinition].valid)
+            && validationErrors.push(ruleDefinitions[ruleDefinition].name)
+        })
+
+        console.log('validation errors: ', validationErrors)
     }
 
     function isSubmitDisabled() {
-        return !passwordForm.confirmPassword || !passwordForm.password
+        const {password, confirmPassword} = passwordForm
+        const empty= !confirmPassword || !password
+        const equal = confirmPassword === password
+        return empty || !equal
     }
 
     return (
@@ -78,14 +105,14 @@ export default function Password() {
                 <Requirements/>
             </SectionStyled>
             <SectionStyled>
-                <FormStyled>
+                <FormStyled onSubmit={handleOnSubmit}>
                     <LabelInputContainerStyled>
                         <label htmlFor='password'>Password</label>
                         <input name='password'
                                value={passwordForm.password}
                                onChange={handleOnPasswordFormChange}
                                id='password'
-                               type='password'>
+                               type='text'>
                         </input>
                     </LabelInputContainerStyled>
                     <LabelInputContainerStyled>
@@ -95,15 +122,13 @@ export default function Password() {
                             name='confirmPassword'
                             value={passwordForm.confirmPassword}
                             onChange={handleOnPasswordFormChange}
-                            type='password'>
+                            type='text'>
                         </input>
                     </LabelInputContainerStyled>
                     <LabelInputContainerStyled>
                         <SubmitButtonStyled
-                            onClick={handleOnSubmit}
                             data-testid='button'
-                            disabled={isSubmitDisabled()}
-                            type='button'>
+                            disabled={isSubmitDisabled()}>
                             Submit
                         </SubmitButtonStyled>
                     </LabelInputContainerStyled>
