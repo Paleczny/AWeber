@@ -16,6 +16,7 @@ const FormStyled = styled.form`
   border: 1px solid;
   border-radius: 10px;
   padding: 10px;
+  margin-bottom: 0;
 `
 
 const LabelInputContainerStyled = styled.div`
@@ -69,7 +70,7 @@ export default function Password() {
         upperCase: {
             valid: false,
             regex: /[A-Z]/g,
-            requirementMessage: 'A upperCase character',
+            requirementMessage: 'A uppercase character',
         },
         lowerCase: {
             valid: false,

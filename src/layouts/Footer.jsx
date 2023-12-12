@@ -18,7 +18,7 @@ const ParagraphStyled = styled.p`
 export default function Footer() {
     return (
         <FooterStyled>
-            <ParagraphStyled> Brandon Paleczny - React- Assignment</ParagraphStyled>
+            <ParagraphStyled> Brandon Paleczny - React - Assignment</ParagraphStyled>
         </FooterStyled>
     )
 }
