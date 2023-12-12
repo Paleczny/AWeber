@@ -54,31 +54,33 @@ export default function Password() {
         confirmPassword: ''
     });
 
-    const [passwordValidationErrors, setPasswordValidationErrors] = useState([]);
-
-    const passwordRequirements = {
+    const [passwordRequirements, setPasswordRequirements] = useState({
         number: {
-            valid: /\d/g,
-            name: 'number'
+            valid: false,
+            regex: /\d/g,
+            requirementMessage: 'A number',
         },
         upperCase: {
-            valid: /[A-Z]/g,
-            name: 'upperCase'
+            valid: false,
+            regex: /[A-Z]/g,
+            requirementMessage: 'A upperCase character',
         },
         lowerCase: {
-            valid: /[a-z]/g,
-            name: 'lowerCase'
+            valid: false,
+            regex: /[a-z]/g,
+            requirementMessage: 'A lowercase character',
         },
         minLength: {
-            valid: /^.{6,}$/g,
-            name: 'minLength'
+            valid: false,
+            regex: /^.{6,}$/g,
+            requirementMessage: 'At least 6 characters',
         },
         special: {
-            valid: /[!@#$%^&*()_/\-+={\[\]}|:;"'<,>.]/g,
-            name: 'special'
+            valid: false,
+            regex: /[!@#$%^&*()_/\-+={\[\]}|:;"'<,>.]/g,
+            requirementMessage: 'A special character (!@#$%^&*()_-+={[}]|:;"\'<,>.)',
         }
-    };
-
+    });
 
     function handleOnPasswordFormChange(event) {
         const {name, value} = event.target;
@@ -92,15 +94,14 @@ export default function Password() {
 
     function handleOnSubmit(event) {
         event.preventDefault();
-        let validationErrors = [];
 
-        Object.keys(passwordRequirements).map(ruleDefinition => {
-            !passwordForm.password.match(passwordRequirements[ruleDefinition].valid)
-            && validationErrors.push(passwordRequirements[ruleDefinition].name)
-        });
-
-        setPasswordValidationErrors(()=> {
-            return validationErrors.length ? validationErrors : ['none'];
+        setPasswordRequirements(pves => {
+            return Object.keys(pves).map(pve => {
+                return {
+                    ...pves[pve],
+                    valid: !!passwordForm.password.match(pves[pve].regex)
+                }
+            });
         });
     }
 
@@ -114,7 +115,7 @@ export default function Password() {
     return (
         <ComponentContainer>
             <SectionStyled>
-                <Requirements validationErrors={passwordValidationErrors}/>
+                <Requirements passwordRequirements={passwordRequirements}/>
             </SectionStyled>
             <SectionStyled>
                 <FormStyled onSubmit={handleOnSubmit}>
