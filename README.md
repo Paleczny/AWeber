@@ -13,9 +13,9 @@ Has a submit button that will trigger validation and present success or why the 
 
 
 
-To run application
-    npm install
-    npm run dev
+###To run application
+```npm install```
+``` npm run dev```
 
-To run tests
-    npm run test
+###To run tests
+```npm run test```
