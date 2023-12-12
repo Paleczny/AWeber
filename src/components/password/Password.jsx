@@ -99,7 +99,9 @@ export default function Password() {
             && validationErrors.push(passwordRequirements[ruleDefinition].name)
         });
 
-        setPasswordValidationErrors(validationErrors);
+        setPasswordValidationErrors(()=> {
+            return validationErrors.length ? validationErrors : ['none'];
+        });
     }
 
     function isSubmitDisabled() {
@@ -112,7 +114,7 @@ export default function Password() {
     return (
         <ComponentContainer>
             <SectionStyled>
-                <Requirements/>
+                <Requirements validationErrors={passwordValidationErrors}/>
             </SectionStyled>
             <SectionStyled>
                 <FormStyled onSubmit={handleOnSubmit}>

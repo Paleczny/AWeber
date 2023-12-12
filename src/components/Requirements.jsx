@@ -1,27 +1,47 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {styled} from 'styled-components';
 import Checkmark from "../assets/icons/Checkmark";
 import Xmark from "../assets/icons/Xmark";
 
-export default function Requirements(){
+const ListElementStyled = styled.li`
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+`
+
+function Requirements({validationErrors}) {
 
     return (
         <section>
             <h4>Password Requirements</h4>
             <ul>
-                <li> <Checkmark/>At least 6 characters</li>
-                <li><Xmark/> A lowercase character</li>
-                <li>A uppercase character</li>
-                <li>A number</li>
-                <li>{'A special character (!@#$%^&*()_-+={[}]|:;"\'<,>.)'}</li>
+                <ListElementStyled>
+                    {validationErrors.includes('minLength') || !validationErrors.length ? <Xmark/> : <Checkmark/>}
+                    At least 6 characters
+                </ListElementStyled>
+
+                <ListElementStyled>
+                    {validationErrors.includes('lowerCase') || !validationErrors.length ? <Xmark/> : <Checkmark/>}
+                    A lowercase character
+                </ListElementStyled>
+
+                <ListElementStyled>
+                    {validationErrors.includes('upperCase') || !validationErrors.length ? <Xmark/> : <Checkmark/>}
+                    A upperCase character
+                </ListElementStyled>
+
+                <ListElementStyled>
+                    {validationErrors.includes('number') || !validationErrors.length ? <Xmark/> : <Checkmark/>}
+                    A number
+                </ListElementStyled>
+
+                <ListElementStyled>
+                    {validationErrors.includes('special') || !validationErrors.length ? <Xmark/> : <Checkmark/>}
+                    {'A special character (!@#$%^&*()_-+={[}]|:;"\'<,>.)'}
+                </ListElementStyled>
             </ul>
         </section>
     )
 }
 
-// Has two input fields to validate the entry from the user (both inputs must match)
-// Password has a min length of 6 characters
-// Password has at least 1 uppercase character
-// Password has at least 1 lowercase character
-// Password has at least 1 number
-// Password has at least 1 special character (!@#$%^&*()_-+={[}]|:;"'<,>.)
+export default memo(Requirements)
