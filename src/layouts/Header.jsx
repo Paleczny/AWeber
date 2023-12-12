@@ -1,7 +1,7 @@
 import React from 'react';
+import {styled} from 'styled-components';
 
 import AWeber from '../assets/icons/AWeber';
-import {styled} from 'styled-components';
 
 const HeaderStyled = styled.header`
   height: 110px;

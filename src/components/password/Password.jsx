@@ -85,7 +85,7 @@ export default function Password() {
                                value={passwordForm.password}
                                onChange={handleOnPasswordFormChange}
                                id='password'
-                               type="password">
+                               type='password'>
                         </input>
                     </LabelInputContainerStyled>
                     <LabelInputContainerStyled>
@@ -95,12 +95,13 @@ export default function Password() {
                             name='confirmPassword'
                             value={passwordForm.confirmPassword}
                             onChange={handleOnPasswordFormChange}
-                            type="password">
+                            type='password'>
                         </input>
                     </LabelInputContainerStyled>
                     <LabelInputContainerStyled>
                         <SubmitButtonStyled
                             onClick={handleOnSubmit}
+                            data-testid='button'
                             disabled={isSubmitDisabled()}
                             type='button'>
                             Submit
