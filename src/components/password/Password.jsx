@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {styled} from 'styled-components';
 
-import Requirements from '../Requirements';
+import Requirements from '../passwordRequirements/PasswordRequirements';
 
 const SectionStyled = styled.section`
   padding-left: 25px;
@@ -13,11 +13,15 @@ const FormStyled = styled.form`
   display: grid;
   grid-template-columns: 300px;
   grid-gap: 30px;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px;
 `
 
 const LabelInputContainerStyled = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: ${({marginBottom}) => marginBottom}
 `
 
 const SubmitButtonStyled = styled.button`
@@ -53,6 +57,8 @@ export default function Password() {
         password: '',
         confirmPassword: ''
     });
+
+    const passwordsAreEqual = passwordForm.password === passwordForm.confirmPassword;
 
     const [passwordRequirements, setPasswordRequirements] = useState({
         number: {
@@ -96,20 +102,31 @@ export default function Password() {
         event.preventDefault();
 
         setPasswordRequirements(pves => {
-            return Object.keys(pves).map(pve => {
+            let allValid = true;
+            const newPves =  Object.keys(pves).map(pve => {
+                const valid =  !!passwordForm.password.match(pves[pve].regex)
+                if(!valid){
+                    allValid = false;
+                }
                 return {
                     ...pves[pve],
-                    valid: !!passwordForm.password.match(pves[pve].regex)
+                    valid
                 }
             });
+
+            if(allValid){
+                alert("Success!")
+            }
+
+            return newPves;
         });
     }
 
     function isSubmitDisabled() {
         const {password, confirmPassword} = passwordForm;
         const empty = !confirmPassword || !password;
-        const equal = confirmPassword === password;
-        return empty || !equal;
+
+        return empty || !passwordsAreEqual;
     }
 
     return (
@@ -128,7 +145,7 @@ export default function Password() {
                                type='password'>
                         </input>
                     </LabelInputContainerStyled>
-                    <LabelInputContainerStyled>
+                    <LabelInputContainerStyled marginBottom={passwordsAreEqual && '48px'}>
                         <label htmlFor='confirmPassword'>Confirm Password</label>
                         <input
                             id='confirmPassword'
@@ -138,6 +155,7 @@ export default function Password() {
                             type='password'>
                         </input>
                     </LabelInputContainerStyled>
+                    {!passwordsAreEqual && <label>Passwords do not match</label>}
                     <LabelInputContainerStyled>
                         <SubmitButtonStyled
                             data-testid='button'

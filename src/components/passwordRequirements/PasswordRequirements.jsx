@@ -1,8 +1,8 @@
 import React, {memo} from 'react';
 import {styled} from 'styled-components';
 
-import Checkmark from "../assets/icons/Checkmark";
-import Xmark from "../assets/icons/Xmark";
+import Checkmark from "../../assets/icons/Checkmark";
+import Xmark from "../../assets/icons/Xmark";
 
 const ListElementStyled = styled.li`
   list-style-type: none;
@@ -10,7 +10,16 @@ const ListElementStyled = styled.li`
   align-items: center;
 `
 
-function Requirements({passwordRequirements}) {
+const PasswordSection = styled.section`
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  border-color: ${({noErrors}) => {
+    return noErrors ? 'green' : 'red';
+  }};
+`
+
+function PasswordRequirements({passwordRequirements}) {
     const validationListItems = Object.keys(passwordRequirements).map((passwordRequirement, index) => {
         return (
             <ListElementStyled key={index}>
@@ -20,14 +29,16 @@ function Requirements({passwordRequirements}) {
         )
     });
 
+    const noErrors = Object.keys(passwordRequirements).every(passwordRequirement => passwordRequirements[passwordRequirement].valid);
+
     return (
-        <section>
+        <PasswordSection noErrors={noErrors}>
             <h4>Password Requirements</h4>
             <ul>
                 {validationListItems}
             </ul>
-        </section>
+        </PasswordSection>
     )
 }
 
-export default memo(Requirements);
+export default memo(PasswordRequirements);
